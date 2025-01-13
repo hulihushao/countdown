@@ -94,10 +94,12 @@
       let time = box.querySelector(".time");
       let timehour = box.querySelector(".timehour");
       let holidaydatetime = document.querySelector("#holidaydatetime");
+      let targetHour = "18:00:00";
       let holidayTime = new Date(
         localStorage.getItem("holidaydatetime") || "2025-01-24 18:00:00"
       );
       if (localStorage.getItem("holidaydatetime")) {
+        targetHour = localStorage.getItem("holidaydatetime").split("T")[1];
         box.querySelector(".targetdate").innerHTML = localStorage
           .getItem("holidaydatetime")
           .split("-")[2]
@@ -110,7 +112,14 @@
           .replace(/\b(\d)\b/g, "0$1");
       const getTime = () => {
         let date = new Date();
-        let todydate = new Date(`2025-01-${new Date().getDate()} 18:00:00`);
+        let todydate = new Date(
+          `2025-01-${new Date().getDate()} ${targetHour}`
+        );
+        if (date.getTime() > todydate.getTime()) {
+          todydate = new Date(
+            `2025-01-${new Date().getDate() + 1} ${targetHour}`
+          );
+        }
         let day = date.getDate();
 
         const countTime = holidayTime.getTime() - date.getTime();
@@ -131,7 +140,7 @@
           time.style.display = "block";
           days.style.display = "block";
           timehour.innerHTML = formatSeconds(
-            (todydate.getTime() - date.getTime()) / 1000
+            Math.abs(todydate.getTime() - date.getTime()) / 1000
           );
         }
         window.requestAnimationFrame(getTime);
@@ -145,6 +154,7 @@
         box.querySelector(".targetdate").innerHTML = e.target.value
           .split("-")[2]
           .split("T")[0];
+        targetHour = e.target.value.split("T")[1];
         holidayTime = new Date(e.target.value);
       });
     </script>
@@ -155,10 +165,13 @@
       let time2 = box2.querySelector(".time");
       let timehour2 = box2.querySelector(".timehour");
       let gohomedatetime = document.querySelector("#gohomedatetime");
+      let targetHour2 = "09:00:00";
       let holidayTime2 = new Date(
         localStorage.getItem("gohomedatetime") || "2025-01-25 09:00:00"
       );
       if (localStorage.getItem("gohomedatetime")) {
+        targetHour2 = localStorage.getItem("gohomedatetime").split("T")[1];
+
         box2.querySelector(".targetdate1").innerHTML = localStorage
           .getItem("gohomedatetime")
           .split("-")[2]
@@ -170,7 +183,14 @@
       }
       const goHomeTime = () => {
         let date = new Date();
-        let todydate = new Date(`2025-01-${new Date().getDate() + 1} 09:00:00`);
+        let todydate = new Date(
+          `2025-01-${new Date().getDate() + 1} ${targetHour2}`
+        );
+        if (date.getTime() > todydate.getTime()) {
+          todydate = new Date(
+            `2025-01-${new Date().getDate() + 1} ${targetHour2}`
+          );
+        }
         let day = date.getDate();
 
         const countTime = holidayTime2.getTime() - date.getTime();
@@ -203,7 +223,7 @@
         box2.querySelector(".targetdate1").innerHTML = e.target.value
           .split("-")[2]
           .split("T")[0];
-        box2.querySelector(".targetdate2").innerHTML =
+        targetHour2 = box2.querySelector(".targetdate2").innerHTML =
           e.target.value.split("T")[1];
         holidayTime2 = new Date(e.target.value);
       });
