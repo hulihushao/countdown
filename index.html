@@ -69,7 +69,8 @@
       </div>
       <div class="box2">
         <h2 class="h2">
-          距离25号 <span class="targetdate">2025-01-25 09:00</span> 回家还有
+          距离 <span class="targetdate1">25</span> 号
+          <span class="targetdate2">09:00</span> 回家还有
         </h2>
         <h1 class="time">00</h1>
         <h2 class="day">天</h2>
@@ -175,9 +176,11 @@
       goHomeTime();
       gohomedatetime.addEventListener("input", (e) => {
         if (!e.target.value) return;
-        box2.querySelector(".targetdate").innerHTML = e.target.value
-          .split("T")
-          .join(" ");
+        box2.querySelector(".targetdate1").innerHTML = e.target.value
+          .split("-")[2]
+          .split("T")[0];
+        box2.querySelector(".targetdate2").innerHTML =
+          e.target.value.split("T")[1];
         holidayTime2 = new Date(e.target.value);
       });
     </script>
