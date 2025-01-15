@@ -226,6 +226,16 @@
           .split("T")[0];
         targetHour = e.target.value.split("T")[1];
         holidayTime = new Date(e.target.value);
+
+        const dateDay = e.target.value.split("-")[2].split("T")[0];
+        setWheather(
+          wheatherbox,
+          holidayWeather,
+          holidayCity,
+          0,
+          Number(dateDay)
+        );
+        setWheather(wheatherbox, homeWeather, homeCity, 1, Number(dateDay));
       });
     </script>
     <script>
@@ -338,6 +348,7 @@
       let homeWeather;
       let holidayCity;
       let homeCity;
+      let currentday = 24;
       if (localStorage.getItem("homeAddress")) {
         if (
           localStorage.getItem("homeAddress").endsWith("市") ||
@@ -369,7 +380,13 @@
           console.log(res);
           homeWeather = res.data;
           homeCity = res.city;
-          setWheather(wheatherbox, homeWeather, res.city, 1);
+          setWheather(
+            wheatherbox,
+            homeWeather,
+            res.city,
+            1,
+            Number(currentday)
+          );
         });
       fetch(createURL(""))
         .then((res) => res.json())
@@ -377,53 +394,39 @@
           console.log(res);
           holidayWeather = res.data;
           holidayCity = res.city;
-          setWheather(wheatherbox, holidayWeather, res.city, 0);
+          setWheather(
+            wheatherbox,
+            holidayWeather,
+            res.city,
+            0,
+            Number(currentday)
+          );
         });
-      let currentday = 25;
       if (localStorage.getItem("holidaydatetime")) {
         currentday = localStorage
           .getItem("holidaydatetime")
           ?.split("-")[2]
           .split("T")[0];
       }
-      let one = Number(currentday);
-      let two = Number(currentday) + 1;
-      let three = Number(currentday) + 2;
-      let four = Number(currentday) + 3;
-      let five = Number(currentday) + 4;
-      const setWheather = (box, Weather, city, index = 0) => {
+      const setWheather = (box, Weather, city, index = 0, tody = 24) => {
         box.querySelectorAll(".weather-day").forEach((item, i) => {
-          item.innerHTML = Number(currentday) + i + "号";
+          item.innerHTML = Number(tody) + i + "号";
         });
         box.querySelectorAll(".item").forEach((item, i) => {
           item.querySelectorAll(".weather")[index].innerHTML =
             city +
             "：" +
-            Weather.find(
-              (item) => item.date == `2025-01-${Number(currentday) + i}`
-            ).wea +
+            Weather.find((item) => item.date == `2025-01-${Number(tody) + i}`)
+              .wea +
             "</br>" +
-            Weather.find(
-              (item) => item.date == `2025-01-${Number(currentday) + i}`
-            ).tem_day +
+            Weather.find((item) => item.date == `2025-01-${Number(tody) + i}`)
+              .tem_day +
             "℃" +
             " </br> " +
-            Weather.find(
-              (item) => item.date == `2025-01-${Number(currentday) + i}`
-            ).win;
+            Weather.find((item) => item.date == `2025-01-${Number(tody) + i}`)
+              .win;
         });
       };
-      holidaydatetime.addEventListener("change", (e) => {
-        if (!e.target.value) return;
-        const dateDay = e.target.value.split("-")[2].split("T")[0];
-        one = Number(dateDay);
-        two = Number(dateDay) + 1;
-        three = Number(dateDay) + 2;
-        four = Number(dateDay) + 3;
-        five = Number(dateDay) + 4;
-        setWheather(wheatherbox, holidayWeather, holidayCity, 0);
-        setWheather(wheatherbox, homeWeather, homeCity, 1);
-      });
     </script>
   </body>
 </html>
