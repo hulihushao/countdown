@@ -129,7 +129,7 @@
         }
         let day = date.getDate();
 
-        const countTime = holidayTime.getTime() - date.getTime();
+        const countTime = Math.abs(holidayTime.getTime() - date.getTime());
         let dayCount = Math.floor(countTime / (1000 * 60 * 60 * 24));
         time.innerHTML = dayCount;
         if (dayCount < 3) {
@@ -200,7 +200,7 @@
         }
         let day = date.getDate();
 
-        const countTime = holidayTime2.getTime() - date.getTime();
+        const countTime = Math.abs(holidayTime2.getTime() - date.getTime());
         let dayCount = Math.floor(countTime / (1000 * 60 * 60 * 24));
         time2.innerHTML = dayCount;
         if (dayCount < 3) {
@@ -218,7 +218,7 @@
           time2.style.display = "block";
           days2.style.display = "block";
           timehour2.innerHTML = formatSeconds(
-            (todydate.getTime() - date.getTime()) / 1000
+            Math.abs(todydate.getTime() - date.getTime()) / 1000
           );
         }
         window.requestAnimationFrame(goHomeTime);
