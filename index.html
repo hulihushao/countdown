@@ -184,7 +184,7 @@
       const goHomeTime = () => {
         let date = new Date();
         let todydate = new Date(
-          `2025-01-${new Date().getDate() + 1} ${targetHour2}`
+          `2025-01-${new Date().getDate()} ${targetHour2}`
         );
         if (date.getTime() > todydate.getTime()) {
           todydate = new Date(
