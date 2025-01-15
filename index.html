@@ -20,6 +20,7 @@
       }
       .con {
         display: flex;
+        flex-wrap: wrap;
       }
       .box,
       .box2 {
@@ -33,6 +34,11 @@
         line-height: 100px;
         color: #1890ff;
         font-family: LED;
+      }
+      @media screen and (max-width: 900px) {
+        .box,.box2 {
+          width: 100%;
+        }
       }
       .time,
       .timehour,
