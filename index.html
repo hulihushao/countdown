@@ -309,7 +309,7 @@
           e.target.value.split("T")[1];
         holidayTime2 = new Date(e.target.value);
       });
-      homeAddress.addEventListener("blur", (e) => {
+      homeAddress.addEventListener("input", (e) => {
         if (!e.target.value) return;
         localStorage.setItem("homeAddress", e.target.value);
         if (
@@ -348,6 +348,17 @@
           homeCity = localStorage.getItem("homeAddress");
         }
       }
+      homeAddress.addEventListener("change", (e) => {
+        if (!e.target.value) return;
+        fetch(createURL(homeCity))
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            homeWeather = res.data;
+            homeCity = res.city;
+            setWheather(wheatherbox, homeWeather, res.city, 1);
+          });
+      });
       fetch(createURL(homeCity || "确山"))
         .then((res) => res.json())
         .then((res) => {
