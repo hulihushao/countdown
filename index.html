@@ -8,7 +8,10 @@
       content="upgrade-insecure-requests"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
     <title>放假倒计时</title>
     <style>
       @font-face {
@@ -278,8 +281,13 @@
           homeCity = localStorage.getItem("homeAddress");
         }
       }
+      let todayday = new Date().getDate();
       const goHomeTime = () => {
         let date = new Date();
+        if (date.getDate() != todayday) {
+          getWeather(Number(currentday));
+          todayday = date.getDate();
+        }
         let todydate = new Date(
           `2025-01-${new Date().getDate()} ${targetHour2}`
         );
@@ -344,7 +352,7 @@
       function createURL(adcode) {
         return baseUrl + `&city=${adcode}`;
       }
-      const wheatherbox = document.querySelector(".weathers");
+      let wheatherbox = document.querySelector(".weathers");
       let holidayWeather;
       let homeWeather;
       let holidayCity;
@@ -375,40 +383,33 @@
             setWheather(wheatherbox, homeWeather, res.city, 1);
           });
       });
-      fetch(createURL(homeCity || "确山"))
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res);
-          homeWeather = res.data;
-          homeCity = res.city;
-          setWheather(
-            wheatherbox,
-            homeWeather,
-            res.city,
-            1,
-            Number(currentday)
-          );
-        });
-      fetch(createURL(""))
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res);
-          holidayWeather = res.data;
-          holidayCity = res.city;
-          setWheather(
-            wheatherbox,
-            holidayWeather,
-            res.city,
-            0,
-            Number(currentday)
-          );
-        });
+      let getWeather = (currentday) => {
+        fetch(createURL(homeCity || "确山"))
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            homeWeather = res.data;
+            homeCity = res.city;
+            setWheather(wheatherbox, homeWeather, res.city, 1, currentday);
+          });
+        fetch(createURL(""))
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            holidayWeather = res.data;
+            holidayCity = res.city;
+            setWheather(wheatherbox, holidayWeather, res.city, 0, currentday);
+          });
+      };
+
       if (localStorage.getItem("holidaydatetime")) {
         currentday = localStorage
           .getItem("holidaydatetime")
           ?.split("-")[2]
           .split("T")[0];
       }
+      getWeather(Number(currentday));
+
       const setWheather = (box, Weather, city, index = 0, tody = 24) => {
         box.querySelectorAll(".weather-day").forEach((item, i) => {
           item.innerHTML = Number(tody) + i + "号";
