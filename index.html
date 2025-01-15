@@ -35,12 +35,7 @@
         color: #1890ff;
         font-family: LED;
       }
-      @media screen and (max-width: 900px) {
-        .box,
-        .box2 {
-          width: 100%;
-        }
-      }
+
       .time,
       .timehour,
       .time2,
@@ -52,9 +47,64 @@
       .createtime {
         line-height: 20px;
       }
+      .weathers {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        line-height: 20px;
+        text-align: center;
+        color: #1890ff;
+        font-family: LED;
+      }
+      .item {
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .weather-day {
+        line-height: 30px;
+        margin-top: 10px;
+      }
+    </style>
+    <style>
+      @media screen and (max-width: 900px) {
+        .box,
+        .box2 {
+          width: 100%;
+        }
+        .item {
+          width: 50%;
+        }
+      }
     </style>
   </head>
   <body>
+    <div class="weathers">
+      <div class="item1 item">
+        <span class="weather-day1 weather-day">24号</span>
+        <span class="weather"></span>
+        <span class="weather"></span>
+      </div>
+      <div class="item2 item">
+        <span class="weather-day2 weather-day">25号</span>
+        <span class="weather"></span>
+        <span class="weather"></span>
+      </div>
+      <div class="item3 item">
+        <span class="weather-day3 weather-day">26号</span>
+        <span class="weather"></span>
+        <span class="weather"></span>
+      </div>
+      <div class="item4 item">
+        <span class="weather-day3 weather-day">27号</span>
+        <span class="weather"></span>
+        <span class="weather"></span>
+      </div>
+    </div>
     <div class="con">
       <div class="box">
         <h2 class="h2">
@@ -90,6 +140,15 @@
             name=""
             value="2025-01-25T09:00"
             id="gohomedatetime"
+          />
+        </div>
+        <div class="createtime">
+          <label> > </label>
+          自定义目的地（ 支持市区县, 不支持乡镇级别）：<input
+            style="width: 80px"
+            value="确山县"
+            id="homeAddress"
+            placeholder="例如：确山县或者确山"
           />
         </div>
       </div>
@@ -172,6 +231,7 @@
       let time2 = box2.querySelector(".time");
       let timehour2 = box2.querySelector(".timehour");
       let gohomedatetime = document.querySelector("#gohomedatetime");
+      let homeAddress = document.querySelector("#homeAddress");
       let targetHour2 = "09:00:00";
       let holidayTime2 = new Date(
         localStorage.getItem("gohomedatetime") || "2025-01-25 09:00:00"
@@ -187,6 +247,21 @@
           .getItem("gohomedatetime")
           .split("T")[1];
         gohomedatetime.value = localStorage.getItem("gohomedatetime");
+      }
+      if (localStorage.getItem("homeAddress")) {
+        homeAddress.value = localStorage.getItem("homeAddress");
+        if (
+          localStorage.getItem("homeAddress").endsWith("市") ||
+          localStorage.getItem("homeAddress").endsWith("县") ||
+          localStorage.getItem("homeAddress").endsWith("区")
+        ) {
+          homeCity = localStorage
+            .getItem("homeAddress")
+            .substring(0, localStorage.getItem("homeAddress").length - 1);
+          console.log(homeCity);
+        } else {
+          homeCity = localStorage.getItem("homeAddress");
+        }
       }
       const goHomeTime = () => {
         let date = new Date();
@@ -233,6 +308,106 @@
         targetHour2 = box2.querySelector(".targetdate2").innerHTML =
           e.target.value.split("T")[1];
         holidayTime2 = new Date(e.target.value);
+      });
+      homeAddress.addEventListener("blur", (e) => {
+        if (!e.target.value) return;
+        localStorage.setItem("homeAddress", e.target.value);
+        if (
+          e.target.value.endsWith("市") ||
+          e.target.value.endsWith("县") ||
+          e.target.value.endsWith("区")
+        ) {
+          homeCity = e.target.value.substring(0, e.target.value.length - 1);
+          console.log(homeCity);
+        } else {
+          homeCity = e.target.value;
+        }
+      });
+    </script>
+    <script>
+      const baseUrl = `http://v1.yiketianqi.com/free/month?unescape=1&appid=${"86537513"}&appsecret=${"TFg1xPUV"}`;
+      function createURL(adcode) {
+        return baseUrl + `&city=${adcode}`;
+      }
+      const wheatherbox = document.querySelector(".weathers");
+      let holidayWeather;
+      let homeWeather;
+      let holidayCity;
+      let homeCity;
+      if (localStorage.getItem("homeAddress")) {
+        if (
+          localStorage.getItem("homeAddress").endsWith("市") ||
+          localStorage.getItem("homeAddress").endsWith("县") ||
+          localStorage.getItem("homeAddress").endsWith("区")
+        ) {
+          homeCity = localStorage
+            .getItem("homeAddress")
+            .substring(0, localStorage.getItem("homeAddress").length - 1);
+          console.log(homeCity);
+        } else {
+          homeCity = localStorage.getItem("homeAddress");
+        }
+      }
+      fetch(createURL(homeCity || "确山"))
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          homeWeather = res.data;
+          homeCity = res.city;
+          setWheather(wheatherbox, homeWeather, res.city, 1);
+        });
+      fetch(createURL(""))
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          holidayWeather = res.data;
+          holidayCity = res.city;
+          setWheather(wheatherbox, holidayWeather, res.city, 0);
+        });
+      let currentday = 25;
+      if (localStorage.getItem("holidaydatetime")) {
+        currentday = localStorage
+          .getItem("holidaydatetime")
+          ?.split("-")[2]
+          .split("T")[0];
+      }
+      let one = Number(currentday);
+      let two = Number(currentday) + 1;
+      let three = Number(currentday) + 2;
+      let four = Number(currentday) + 3;
+      let five = Number(currentday) + 4;
+      const setWheather = (box, Weather, city, index = 0) => {
+        box.querySelectorAll(".weather-day").forEach((item, i) => {
+          item.innerHTML = Number(currentday) + i + "号";
+        });
+        box.querySelectorAll(".item").forEach((item, i) => {
+          item.querySelectorAll(".weather")[index].innerHTML =
+            city +
+            "：" +
+            Weather.find(
+              (item) => item.date == `2025-01-${Number(currentday) + i}`
+            ).wea +
+            "</br>" +
+            Weather.find(
+              (item) => item.date == `2025-01-${Number(currentday) + i}`
+            ).tem_day +
+            "℃" +
+            " </br> " +
+            Weather.find(
+              (item) => item.date == `2025-01-${Number(currentday) + i}`
+            ).win;
+        });
+      };
+      holidaydatetime.addEventListener("change", (e) => {
+        if (!e.target.value) return;
+        const dateDay = e.target.value.split("-")[2].split("T")[0];
+        one = Number(dateDay);
+        two = Number(dateDay) + 1;
+        three = Number(dateDay) + 2;
+        four = Number(dateDay) + 3;
+        five = Number(dateDay) + 4;
+        setWheather(wheatherbox, holidayWeather, holidayCity, 0);
+        setWheather(wheatherbox, homeWeather, homeCity, 1);
       });
     </script>
   </body>
