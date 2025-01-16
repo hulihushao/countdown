@@ -239,6 +239,9 @@
             document.querySelector("#iframePage").onload = () => {
               document.querySelector("#page").style.opacity = 1;
             };
+            setTimeout(()=>{
+              document.querySelector("#page").style.opacity = 1
+            }, 3000)
             document.querySelector("#iframePage").src = "./yanhua.html";
           }
           box.style.color = "#f5222d";
