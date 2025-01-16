@@ -82,7 +82,7 @@
         top: 0;
         left: 0;
         opacity: 0;
-        transition: all 3s;
+        transition: opacity 3s;
       }
     </style>
     <style>
@@ -95,12 +95,12 @@
           width: 30%;
         }
         #page {
-          height: 130%;
+          height: var(--pageHeight);
         }
       }
     </style>
   </head>
-  <body>
+  <body style="--pageHeight: 0px" onload="onload()">
     <div class="weathers">
       <div class="item1 item">
         <span class="weather-day1 weather-day">23号</span>
@@ -471,4 +471,17 @@
       };
     </script>
   </body>
+  <script>
+    const onload = () => {
+      document
+        .querySelector("body")
+        .style.setProperty(
+          "--pageHeight",
+          document.querySelector(".weathers").getBoundingClientRect().height +
+            document.querySelector(".con").getBoundingClientRect().height +
+            "px"
+        );
+    };
+    window.onresize = onload;
+  </script>
 </html>
