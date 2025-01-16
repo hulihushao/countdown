@@ -90,22 +90,27 @@
   <body>
     <div class="weathers">
       <div class="item1 item">
-        <span class="weather-day1 weather-day">24号</span>
+        <span class="weather-day1 weather-day">23号</span>
         <span class="weather"></span>
         <span class="weather"></span>
       </div>
       <div class="item2 item">
-        <span class="weather-day2 weather-day">25号</span>
+        <span class="weather-day2 weather-day">24号</span>
         <span class="weather"></span>
         <span class="weather"></span>
       </div>
       <div class="item3 item">
-        <span class="weather-day3 weather-day">26号</span>
+        <span class="weather-day3 weather-day">25号</span>
         <span class="weather"></span>
         <span class="weather"></span>
       </div>
       <div class="item4 item">
-        <span class="weather-day3 weather-day">27号</span>
+        <span class="weather-day4 weather-day">26号</span>
+        <span class="weather"></span>
+        <span class="weather"></span>
+      </div>
+      <div class="item5 item">
+        <span class="weather-day5 weather-day">27号</span>
         <span class="weather"></span>
         <span class="weather"></span>
       </div>
@@ -113,7 +118,7 @@
     <div class="con">
       <div class="box">
         <h2 class="h2">
-          距离 <span class="targetdate">24</span> 号下班放假还有
+          距离 <span class="targetdate">23</span> 号下班放假还有
         </h2>
         <h1 class="time">00</h1>
         <h2 class="day">天</h2>
@@ -124,7 +129,7 @@
           自定义放假时间：<input
             type="datetime-local"
             name=""
-            value="2025-01-24T18:00"
+            value="2025-01-23T18:00"
             id="holidaydatetime"
           />
         </div>
@@ -167,7 +172,7 @@
       let holidaydatetime = document.querySelector("#holidaydatetime");
       let targetHour = "18:00:00";
       let holidayTime = new Date(
-        localStorage.getItem("holidaydatetime") || "2025-01-24 18:00:00"
+        localStorage.getItem("holidaydatetime") || "2025-01-23 18:00:00"
       );
       if (localStorage.getItem("holidaydatetime")) {
         targetHour = localStorage.getItem("holidaydatetime").split("T")[1];
@@ -354,7 +359,7 @@
       let homeWeather;
       let holidayCity;
       let homeCity;
-      let currentday = 24;
+      let currentday = 23;
       if (localStorage.getItem("homeAddress")) {
         if (
           localStorage.getItem("homeAddress").endsWith("市") ||
@@ -407,7 +412,7 @@
       }
       getWeather(Number(currentday));
 
-      const setWheather = (box, Weather, city, index = 0, tody = 24) => {
+      const setWheather = (box, Weather, city, index = 0, tody = 23) => {
         box.querySelectorAll(".weather-day").forEach((item, i) => {
           item.innerHTML = Number(tody) + i + "号";
         });
