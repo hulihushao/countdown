@@ -116,6 +116,7 @@
         display: flex;
         justify-content: space-between;
         transition: opacity 0.3s, visibility 0.3s;
+        display: none;
       }
       @media (min-width: 800px) {
         #controls {
@@ -137,6 +138,7 @@
         width: 100%;
         background-color: rgba(0, 0, 0, 0.42);
         transition: opacity 0.3s, visibility 0.3s;
+        display: none;
       }
       #menu__header {
         padding: 20px 0 44px;
@@ -272,7 +274,7 @@
           <canvas id="trails-canvas"></canvas>
           <canvas id="main-canvas"></canvas>
         </div>
-        <!-- <div id="controls">
+        <div id="controls">
           <div id="pause-btn" class="btn">
             <svg fill="white" width="24" height="24">
               <use href="#icon-pause"></use>
@@ -327,7 +329,7 @@
               >
             </div>
           </form>
-        </div> -->
+        </div>
       </div>
     </div>
     <!-- partial -->
