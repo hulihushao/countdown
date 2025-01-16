@@ -74,6 +74,16 @@
         line-height: 30px;
         margin-top: 10px;
       }
+      #page {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: all 3s;
+      }
     </style>
     <style>
       @media screen and (max-width: 900px) {
@@ -163,6 +173,19 @@
         </div>
       </div>
     </div>
+    <div id="page">
+      <iframe
+        id="iframePage"
+        align="center"
+        width="100%"
+        height="100%"
+        frameborder="no"
+        border="0"
+        marginwidth="0"
+        marginheight="0"
+        scrolling="no"
+      ></iframe>
+    </div>
     <script>
       let box = document.querySelector(".box");
       let days = box.querySelector(".day");
@@ -186,6 +209,7 @@
         [parseInt(s / 60 / 60), parseInt((s / 60) % 60), parseInt(s % 60)]
           .join(":")
           .replace(/\b(\d)\b/g, "0$1");
+
       const getTime = () => {
         let date = new Date();
         let todydate = new Date(
@@ -208,11 +232,22 @@
         }
 
         if (dayCount < 1) {
+          if (!document.querySelector("#iframePage").src) {
+            document.querySelector("#iframePage").onload = () => {
+              document.querySelector("#page").style.opacity = 1;
+            };
+            document.querySelector("#iframePage").src = "./yanhua.html";
+          }
           box.style.color = "#f5222d";
           time.style.display = "none";
           days.style.display = "none";
           timehour.innerHTML = formatSeconds(countTime / 1000);
         } else {
+          if (document.querySelector("#iframePage").src) {
+            document.querySelector("#iframePage").onload = null;
+            document.querySelector("#page").style.opacity = 0;
+            document.querySelector("#iframePage").removeAttribute("src");
+          }
           time.style.display = "block";
           days.style.display = "block";
           timehour.innerHTML = formatSeconds(
