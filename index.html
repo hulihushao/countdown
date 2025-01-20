@@ -187,6 +187,8 @@
         marginwidth="0"
         marginheight="0"
         scrolling="no"
+        src="./yanhua.html"
+        data-load="0"
       ></iframe>
     </div>
     <script>
@@ -235,24 +237,30 @@
         }
 
         if (dayCount < 1) {
-          if (!document.querySelector("#iframePage").src) {
+          if (document.querySelector("#iframePage").dataset.load == 0) {
             document.querySelector("#iframePage").onload = () => {
               document.querySelector("#page").style.opacity = 1;
             };
-            setTimeout(()=>{
-              document.querySelector("#page").style.opacity = 1
-            }, 3000)
-            document.querySelector("#iframePage").src = "./yanhua.html";
+            setTimeout(() => {
+              document.querySelector("#page").style.opacity = 1;
+            }, 3000);
+            document
+              .querySelector("#iframePage")
+              .setAttribute("data-load", "1");
+            // document.querySelector("#iframePage").src = "./yanhua.html";
           }
           box.style.color = "#f5222d";
           time.style.display = "none";
           days.style.display = "none";
           timehour.innerHTML = formatSeconds(countTime / 1000);
         } else {
-          if (document.querySelector("#iframePage").src) {
+          if (document.querySelector("#iframePage").dataset.load == 1) {
             document.querySelector("#iframePage").onload = null;
             document.querySelector("#page").style.opacity = 0;
-            document.querySelector("#iframePage").removeAttribute("src");
+            document
+              .querySelector("#iframePage")
+              .setAttribute("data-load", "0");
+            // document.querySelector("#iframePage").removeAttribute("src");
           }
           time.style.display = "block";
           days.style.display = "block";
