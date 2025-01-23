@@ -332,42 +332,42 @@
           homeCity = localStorage.getItem("homeAddress");
         }
       }
-      let todayday = new Date().getDate();
+      let todayday2 = new Date().getDate();
       const goHomeTime = () => {
         let date = new Date();
-        if (date.getDate() != todayday) {
+        if (date.getDate() != todayday2) {
           getWeather(Number(currentday));
-          todayday = date.getDate();
+          todayday2 = date.getDate();
         }
-        let todydate = new Date(
+        let todydate2 = new Date(
           `2025-01-${new Date().getDate()} ${targetHour2}`
         );
-        if (date.getTime() > todydate.getTime()) {
-          todydate = new Date(
+        if (date.getTime() > todydate2.getTime()) {
+          todydate2 = new Date(
             `2025-01-${new Date().getDate() + 1} ${targetHour2}`
           );
         }
         let day = date.getDate();
 
-        const countTime = Math.abs(holidayTime2.getTime() - date.getTime());
-        let dayCount = Math.floor(countTime / (1000 * 60 * 60 * 24));
-        time2.innerHTML = dayCount;
-        if (dayCount < 2) {
+        const countTime2 = Math.abs(holidayTime2.getTime() - date.getTime());
+        let dayCount2 = Math.floor(countTime2 / (1000 * 60 * 60 * 24));
+        time2.innerHTML = dayCount2;
+        if (dayCount2 < 2) {
           box2.style.color = "#faad14";
         } else {
           box2.style.color = "#1890ff";
         }
 
-        if (dayCount < 1) {
+        if (dayCount2 < 1) {
           box2.style.color = "#f5222d";
           time2.style.display = "none";
           days2.style.display = "none";
-          timehour.innerHTML = formatSeconds(countTime / 1000);
+          timehour2.innerHTML = formatSeconds(countTime2 / 1000);
         } else {
           time2.style.display = "block";
           days2.style.display = "block";
           timehour2.innerHTML = formatSeconds(
-            Math.abs(todydate.getTime() - date.getTime()) / 1000
+            Math.abs(todydate2.getTime() - date.getTime()) / 1000
           );
         }
         window.requestAnimationFrame(goHomeTime);
