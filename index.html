@@ -325,11 +325,11 @@
         todayday2 = date.getDate();
       }
       let todydate2 = new Date(
-        `2025-01-${new Date().getDate()} ${targetHour2}`
+        `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()} ${targetHour2}`
       );
       if (date.getTime() > todydate2.getTime()) {
         todydate2 = new Date(
-          `2025-01-${new Date().getDate() + 1} ${targetHour2}`
+          `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate() + 1} ${targetHour2}`
         );
       }
       let day = date.getDate();
@@ -454,14 +454,14 @@
         item.querySelectorAll(".weather")[index].innerHTML =
           city +
           "：" +
-          Weather.find((item) => item.date == `2025-01-${Number(tody) + i}`)
+          Weather.find((item) => item.date == `${new Date().getFullYear()}-${new Date().getMonth()}-${Number(tody) + i}`)
             .wea +
           "</br>" +
-          Weather.find((item) => item.date == `2025-01-${Number(tody) + i}`)
+          Weather.find((item) => item.date == `${new Date().getFullYear()}-${new Date().getMonth()}-${Number(tody) + i}`)
             .tem_day +
           "℃" +
           " </br> " +
-          Weather.find((item) => item.date == `2025-01-${Number(tody) + i}`)
+          Weather.find((item) => item.date == `${new Date().getFullYear()}-${new Date().getMonth()}-${Number(tody) + i}`)
             .win;
       });
     };
