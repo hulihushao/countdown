@@ -450,12 +450,13 @@
 
     const setWheather = (box, Weather, city, index = 0, tody = 0) => {
       if (!Weather) return
-      let dateDay = new Date().getDate() + i
+      let dateDay = new Date().getDate()
       let getMonth = new Date().getMonth() + 1
       box.querySelectorAll(".weather-day").forEach((item, i) => {
         item.innerHTML = dateDay + i + "号";
       });
       box.querySelectorAll(".item").forEach((item, i) => {
+        dateDay = dateDay + i
         if (dateDay < 10) {
           dateDay = '0' + dateDay
         }
