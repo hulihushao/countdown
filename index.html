@@ -1,498 +1,484 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="upgrade-insecure-requests"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>放假倒计时</title>
-    <style>
-      @font-face {
-        font-family: LED;
-        src: url("./UnidreamLED.eot"), url("./UnidreamLED.woff");
-      }
-      * {
-        padding: 0;
-        margin: 0;
-      }
-      body,
-      html {
-        height: 100%;
-      }
-      .con {
-        display: flex;
-        flex-wrap: wrap;
-      }
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>放假倒计时</title>
+  <style>
+    @font-face {
+      font-family: LED;
+      src: url("./UnidreamLED.eot"), url("./UnidreamLED.woff");
+    }
+
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body,
+    html {
+      height: 100%;
+    }
+
+    .con {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .box,
+    .box2 {
+      width: 50%;
+      height: 70%;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      line-height: 100px;
+      color: #1890ff;
+      font-family: LED;
+    }
+
+    .time,
+    .timehour,
+    .time2,
+    .timehour2 {
+      font-size: 80px;
+      font-weight: 900;
+      letter-spacing: 12px;
+    }
+
+    .createtime {
+      line-height: 20px;
+      text-align: center;
+    }
+
+    .weathers {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      line-height: 20px;
+      text-align: center;
+      color: #1890ff;
+      font-family: LED;
+    }
+
+    .item {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .weather-day {
+      line-height: 30px;
+      margin-top: 10px;
+    }
+
+    #page {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 3s;
+    }
+  </style>
+  <style>
+    @media screen and (max-width: 900px) {
+
       .box,
       .box2 {
-        width: 50%;
-        height: 70%;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        line-height: 100px;
-        color: #1890ff;
-        font-family: LED;
+        width: 100%;
       }
 
-      .time,
-      .timehour,
-      .time2,
-      .timehour2 {
-        font-size: 80px;
-        font-weight: 900;
-        letter-spacing: 12px;
-      }
-      .createtime {
-        line-height: 20px;
-        text-align: center;
-      }
-      .weathers {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        line-height: 20px;
-        text-align: center;
-        color: #1890ff;
-        font-family: LED;
-      }
       .item {
-        width: 20%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        width: 30%;
       }
-      .weather-day {
-        line-height: 30px;
-        margin-top: 10px;
-      }
+
       #page {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        opacity: 0;
-        transition: opacity 3s;
+        height: var(--pageHeight);
       }
-    </style>
-    <style>
-      @media screen and (max-width: 900px) {
-        .box,
-        .box2 {
-          width: 100%;
-        }
-        .item {
-          width: 30%;
-        }
-        #page {
-          height: var(--pageHeight);
-        }
-      }
-    </style>
-  </head>
-  <body style="--pageHeight: 0px" onload="onload()">
-    <div class="weathers">
-      <div class="item1 item">
-        <span class="weather-day1 weather-day">23号</span>
-        <span class="weather"></span>
-        <span class="weather"></span>
-      </div>
-      <div class="item2 item">
-        <span class="weather-day2 weather-day">24号</span>
-        <span class="weather"></span>
-        <span class="weather"></span>
-      </div>
-      <div class="item3 item">
-        <span class="weather-day3 weather-day">25号</span>
-        <span class="weather"></span>
-        <span class="weather"></span>
-      </div>
-      <div class="item4 item">
-        <span class="weather-day4 weather-day">26号</span>
-        <span class="weather"></span>
-        <span class="weather"></span>
-      </div>
-      <div class="item5 item">
-        <span class="weather-day5 weather-day">27号</span>
-        <span class="weather"></span>
-        <span class="weather"></span>
+    }
+  </style>
+</head>
+
+<body style="--pageHeight: 0px" onload="onload()">
+  <div class="weathers">
+    <div class="item1 item">
+      <span class="weather-day1 weather-day">23号</span>
+      <span class="weather"></span>
+      <span class="weather"></span>
+    </div>
+    <div class="item2 item">
+      <span class="weather-day2 weather-day">24号</span>
+      <span class="weather"></span>
+      <span class="weather"></span>
+    </div>
+    <div class="item3 item">
+      <span class="weather-day3 weather-day">25号</span>
+      <span class="weather"></span>
+      <span class="weather"></span>
+    </div>
+    <div class="item4 item">
+      <span class="weather-day4 weather-day">26号</span>
+      <span class="weather"></span>
+      <span class="weather"></span>
+    </div>
+    <div class="item5 item">
+      <span class="weather-day5 weather-day">27号</span>
+      <span class="weather"></span>
+      <span class="weather"></span>
+    </div>
+  </div>
+  <div class="con">
+    <div class="box">
+      <h2 class="h2">
+        距离 <span class="targetdate">23</span> 号下班放假还有
+      </h2>
+      <h1 class="time">00</h1>
+      <h2 class="day">天</h2>
+      <h1 class="timehour">00</h1>
+      <h2 class="hour">小时</h2>
+      <div class="createtime">
+        <label> > </label>
+        自定义放假时间：<input type="datetime-local" name="" value="2025-01-23T18:00" id="holidaydatetime" />
       </div>
     </div>
-    <div class="con">
-      <div class="box">
-        <h2 class="h2">
-          距离 <span class="targetdate">23</span> 号下班放假还有
-        </h2>
-        <h1 class="time">00</h1>
-        <h2 class="day">天</h2>
-        <h1 class="timehour">00</h1>
-        <h2 class="hour">小时</h2>
-        <div class="createtime">
-          <label> > </label>
-          自定义放假时间：<input
-            type="datetime-local"
-            name=""
-            value="2025-01-23T18:00"
-            id="holidaydatetime"
-          />
-        </div>
+    <div class="box2">
+      <h2 class="h2">
+        距离 <span class="targetdate1">25</span> 号
+        <span class="targetdate2">09:00</span> 回家还有
+      </h2>
+      <h1 class="time">00</h1>
+      <h2 class="day">天</h2>
+      <h1 class="timehour">00</h1>
+      <h2 class="hour">小时</h2>
+      <div class="createtime">
+        <label> > </label>
+        自定义回家时间：<input type="datetime-local" name="" value="2025-01-25T09:00" id="gohomedatetime" />
       </div>
-      <div class="box2">
-        <h2 class="h2">
-          距离 <span class="targetdate1">25</span> 号
-          <span class="targetdate2">09:00</span> 回家还有
-        </h2>
-        <h1 class="time">00</h1>
-        <h2 class="day">天</h2>
-        <h1 class="timehour">00</h1>
-        <h2 class="hour">小时</h2>
-        <div class="createtime">
-          <label> > </label>
-          自定义回家时间：<input
-            type="datetime-local"
-            name=""
-            value="2025-01-25T09:00"
-            id="gohomedatetime"
-          />
-        </div>
-        <div class="createtime">
-          <label> > </label>
-          自定义目的地（ 支持市区县, 不支持乡镇级别）：<input
-            style="width: 80px"
-            value="确山县"
-            id="homeAddress"
-            placeholder="例如：确山县或者确山"
-          />
-        </div>
+      <div class="createtime">
+        <label> > </label>
+        自定义目的地（ 支持市区县, 不支持乡镇级别）：<input style="width: 80px" value="确山县" id="homeAddress" placeholder="例如：确山县或者确山" />
       </div>
     </div>
-    <div id="page">
-      <iframe
-        id="iframePage"
-        align="center"
-        width="100%"
-        height="100%"
-        frameborder="no"
-        border="0"
-        marginwidth="0"
-        marginheight="0"
-        scrolling="no"
-        src="./yanhua.html"
-        data-load="0"
-      ></iframe>
-    </div>
-    <script>
-      let box = document.querySelector(".box");
-      let days = box.querySelector(".day");
-      let hour = box.querySelector(".hour");
-      let time = box.querySelector(".time");
-      let timehour = box.querySelector(".timehour");
-      let holidaydatetime = document.querySelector("#holidaydatetime");
-      let targetHour = "18:00:00";
-      let holidayTime = new Date(
-        localStorage.getItem("holidaydatetime") || "2025-01-23 18:00:00"
-      );
-      if (localStorage.getItem("holidaydatetime")) {
-        targetHour = localStorage.getItem("holidaydatetime").split("T")[1];
-        box.querySelector(".targetdate").innerHTML = localStorage
-          .getItem("holidaydatetime")
-          .split("-")[2]
-          .split("T")[0];
-        holidaydatetime.value = localStorage.getItem("holidaydatetime");
-      }
-      const formatSeconds = (s) =>
-        [parseInt(s / 60 / 60), parseInt((s / 60) % 60), parseInt(s % 60)]
-          .join(":")
-          .replace(/\b(\d)\b/g, "0$1");
-
-      const getTime = () => {
-        let date = new Date();
-        let todydate = new Date(
-          `2025-01-${new Date().getDate()} ${targetHour}`
-        );
-        if (date.getTime() > todydate.getTime()) {
-          todydate = new Date(
-            `2025-01-${new Date().getDate() + 1} ${targetHour}`
-          );
-        }
-        let day = date.getDate();
-
-        const countTime = Math.abs(holidayTime.getTime() - date.getTime());
-        let dayCount = Math.floor(countTime / (1000 * 60 * 60 * 24));
-        time.innerHTML = dayCount;
-        if (dayCount < 2) {
-          box.style.color = "#faad14";
-        } else {
-          box.style.color = "#1890ff";
-        }
-
-        if (dayCount < 1) {
-          if (document.querySelector("#iframePage").dataset.load == 0) {
-            document.querySelector("#iframePage").onload = () => {
-              document.querySelector("#page").style.opacity = 1;
-            };
-            setTimeout(() => {
-              document.querySelector("#page").style.opacity = 1;
-            }, 3000);
-            document
-              .querySelector("#iframePage")
-              .setAttribute("data-load", "1");
-            // document.querySelector("#iframePage").src = "./yanhua.html";
-          }
-          box.style.color = "#f5222d";
-          time.style.display = "none";
-          days.style.display = "none";
-          timehour.innerHTML = formatSeconds(countTime / 1000);
-        } else {
-          if (document.querySelector("#iframePage").dataset.load == 1) {
-            document.querySelector("#iframePage").onload = null;
-            document.querySelector("#page").style.opacity = 0;
-            document
-              .querySelector("#iframePage")
-              .setAttribute("data-load", "0");
-            // document.querySelector("#iframePage").removeAttribute("src");
-          }
-          time.style.display = "block";
-          days.style.display = "block";
-          timehour.innerHTML = formatSeconds(
-            Math.abs(todydate.getTime() - date.getTime()) / 1000
-          );
-        }
-        window.requestAnimationFrame(getTime);
-      };
-      getTime();
-
-      holidaydatetime.addEventListener("input", (e) => {
-        console.log(e.target.value);
-        if (!e.target.value) return;
-        localStorage.setItem("holidaydatetime", e.target.value);
-        box.querySelector(".targetdate").innerHTML = e.target.value
-          .split("-")[2]
-          .split("T")[0];
-        targetHour = e.target.value.split("T")[1];
-        holidayTime = new Date(e.target.value);
-
-        const dateDay = e.target.value.split("-")[2].split("T")[0];
-        setWheather(
-          wheatherbox,
-          holidayWeather,
-          holidayCity,
-          0,
-          Number(dateDay)
-        );
-        setWheather(wheatherbox, homeWeather, homeCity, 1, Number(dateDay));
-      });
-    </script>
-    <script>
-      let box2 = document.querySelector(".box2");
-      let days2 = box2.querySelector(".day");
-      let hour2 = box2.querySelector(".hour");
-      let time2 = box2.querySelector(".time");
-      let timehour2 = box2.querySelector(".timehour");
-      let gohomedatetime = document.querySelector("#gohomedatetime");
-      let homeAddress = document.querySelector("#homeAddress");
-      let targetHour2 = "09:00:00";
-      let holidayTime2 = new Date(
-        localStorage.getItem("gohomedatetime") || "2025-01-24 09:00:00"
-      );
-      if (localStorage.getItem("gohomedatetime")) {
-        targetHour2 = localStorage.getItem("gohomedatetime").split("T")[1];
-
-        box2.querySelector(".targetdate1").innerHTML = localStorage
-          .getItem("gohomedatetime")
-          .split("-")[2]
-          .split("T")[0];
-        box2.querySelector(".targetdate2").innerHTML = localStorage
-          .getItem("gohomedatetime")
-          .split("T")[1];
-        gohomedatetime.value = localStorage.getItem("gohomedatetime");
-      }
-      if (localStorage.getItem("homeAddress")) {
-        homeAddress.value = localStorage.getItem("homeAddress");
-        if (
-          localStorage.getItem("homeAddress").endsWith("市") ||
-          localStorage.getItem("homeAddress").endsWith("县") ||
-          localStorage.getItem("homeAddress").endsWith("区")
-        ) {
-          homeCity = localStorage
-            .getItem("homeAddress")
-            .substring(0, localStorage.getItem("homeAddress").length - 1);
-          console.log(homeCity);
-        } else {
-          homeCity = localStorage.getItem("homeAddress");
-        }
-      }
-      let todayday2 = new Date().getDate();
-      const goHomeTime = () => {
-        let date = new Date();
-        if (date.getDate() != todayday2) {
-          getWeather(Number(currentday));
-          todayday2 = date.getDate();
-        }
-        let todydate2 = new Date(
-          `2025-01-${new Date().getDate()} ${targetHour2}`
-        );
-        if (date.getTime() > todydate2.getTime()) {
-          todydate2 = new Date(
-            `2025-01-${new Date().getDate() + 1} ${targetHour2}`
-          );
-        }
-        let day = date.getDate();
-
-        const countTime2 = Math.abs(holidayTime2.getTime() - date.getTime());
-        let dayCount2 = Math.floor(countTime2 / (1000 * 60 * 60 * 24));
-        time2.innerHTML = dayCount2;
-        if (dayCount2 < 2) {
-          box2.style.color = "#faad14";
-        } else {
-          box2.style.color = "#1890ff";
-        }
-
-        if (dayCount2 < 1) {
-          box2.style.color = "#f5222d";
-          time2.style.display = "none";
-          days2.style.display = "none";
-          timehour2.innerHTML = formatSeconds(countTime2 / 1000);
-        } else {
-          time2.style.display = "block";
-          days2.style.display = "block";
-          timehour2.innerHTML = formatSeconds(
-            Math.abs(todydate2.getTime() - date.getTime()) / 1000
-          );
-        }
-        window.requestAnimationFrame(goHomeTime);
-      };
-      goHomeTime();
-      gohomedatetime.addEventListener("input", (e) => {
-        if (!e.target.value) return;
-        localStorage.setItem("gohomedatetime", e.target.value);
-        box2.querySelector(".targetdate1").innerHTML = e.target.value
-          .split("-")[2]
-          .split("T")[0];
-        targetHour2 = box2.querySelector(".targetdate2").innerHTML =
-          e.target.value.split("T")[1];
-        holidayTime2 = new Date(e.target.value);
-      });
-      homeAddress.addEventListener("input", (e) => {
-        if (!e.target.value) return;
-        localStorage.setItem("homeAddress", e.target.value);
-        if (
-          e.target.value.endsWith("市") ||
-          e.target.value.endsWith("县") ||
-          e.target.value.endsWith("区")
-        ) {
-          homeCity = e.target.value.substring(0, e.target.value.length - 1);
-          console.log(homeCity);
-        } else {
-          homeCity = e.target.value;
-        }
-      });
-    </script>
-    <script>
-      const baseUrl = `http://v1.yiketianqi.com/free/month?unescape=1&appid=${"86537513"}&appsecret=${"TFg1xPUV"}`;
-      function createURL(adcode) {
-        return baseUrl + `&city=${adcode}`;
-      }
-      let wheatherbox = document.querySelector(".weathers");
-      let holidayWeather;
-      let homeWeather;
-      let holidayCity;
-      let homeCity;
-      let currentday = 23;
-      if (localStorage.getItem("homeAddress")) {
-        if (
-          localStorage.getItem("homeAddress").endsWith("市") ||
-          localStorage.getItem("homeAddress").endsWith("县") ||
-          localStorage.getItem("homeAddress").endsWith("区")
-        ) {
-          homeCity = localStorage
-            .getItem("homeAddress")
-            .substring(0, localStorage.getItem("homeAddress").length - 1);
-          console.log(homeCity);
-        } else {
-          homeCity = localStorage.getItem("homeAddress");
-        }
-      }
-      homeAddress.addEventListener("change", (e) => {
-        if (!e.target.value) return;
-        fetch(createURL(homeCity))
-          .then((res) => res.json())
-          .then((res) => {
-            console.log(res);
-            homeWeather = res.data;
-            homeCity = res.city;
-            setWheather(wheatherbox, homeWeather, res.city, 1);
-          });
-      });
-      let getWeather = (currentday) => {
-        fetch(createURL(homeCity || "确山"))
-          .then((res) => res.json())
-          .then((res) => {
-            console.log(res);
-            homeWeather = res.data;
-            homeCity = res.city;
-            setWheather(wheatherbox, homeWeather, res.city, 1, currentday);
-          });
-        fetch(createURL(""))
-          .then((res) => res.json())
-          .then((res) => {
-            console.log(res);
-            holidayWeather = res.data;
-            holidayCity = res.city;
-            setWheather(wheatherbox, holidayWeather, res.city, 0, currentday);
-          });
-      };
-
-      if (localStorage.getItem("holidaydatetime")) {
-        currentday = localStorage
-          .getItem("holidaydatetime")
-          ?.split("-")[2]
-          .split("T")[0];
-      }
-      getWeather(Number(currentday));
-
-      const setWheather = (box, Weather, city, index = 0, tody = 23) => {
-        box.querySelectorAll(".weather-day").forEach((item, i) => {
-          item.innerHTML = Number(tody) + i + "号";
-        });
-        box.querySelectorAll(".item").forEach((item, i) => {
-          item.querySelectorAll(".weather")[index].innerHTML =
-            city +
-            "：" +
-            Weather.find((item) => item.date == `2025-01-${Number(tody) + i}`)
-              .wea +
-            "</br>" +
-            Weather.find((item) => item.date == `2025-01-${Number(tody) + i}`)
-              .tem_day +
-            "℃" +
-            " </br> " +
-            Weather.find((item) => item.date == `2025-01-${Number(tody) + i}`)
-              .win;
-        });
-      };
-    </script>
-  </body>
+  </div>
+  <div id="page">
+    <iframe id="iframePage" align="center" width="100%" height="100%" frameborder="no" border="0" marginwidth="0"
+      marginheight="0" scrolling="no" src="./yanhua.html" data-load="0"></iframe>
+  </div>
   <script>
-    const onload = () => {
-      document
-        .querySelector("body")
-        .style.setProperty(
-          "--pageHeight",
-          document.querySelector(".weathers").getBoundingClientRect().height +
-            document.querySelector(".con").getBoundingClientRect().height +
-            "px"
+    let box = document.querySelector(".box");
+    let days = box.querySelector(".day");
+    let hour = box.querySelector(".hour");
+    let time = box.querySelector(".time");
+    let timehour = box.querySelector(".timehour");
+    let holidaydatetime = document.querySelector("#holidaydatetime");
+    let targetHour = "18:00:00";
+    let holidayTime = new Date(
+      localStorage.getItem("holidaydatetime") || "2025-01-23 18:00:00"
+    );
+    if (localStorage.getItem("holidaydatetime")) {
+      targetHour = localStorage.getItem("holidaydatetime").split("T")[1];
+      box.querySelector(".targetdate").innerHTML = localStorage
+        .getItem("holidaydatetime")
+        .split("-")[2]
+        .split("T")[0];
+      holidaydatetime.value = localStorage.getItem("holidaydatetime");
+    }
+    const formatSeconds = (s) =>
+      [parseInt(s / 60 / 60), parseInt((s / 60) % 60), parseInt(s % 60)]
+        .join(":")
+        .replace(/\b(\d)\b/g, "0$1");
+
+    const getTime = () => {
+      let date = new Date();
+      let todydate = new Date(
+        `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()} ${targetHour}`
+      );
+      if (date.getTime() > todydate.getTime()) {
+        todydate = new Date(
+          `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate() + 1} ${targetHour}`
         );
+      }
+      let day = date.getDate();
+
+      const countTime = Math.abs(holidayTime.getTime() - date.getTime());
+      let dayCount = Math.floor(countTime / (1000 * 60 * 60 * 24));
+      time.innerHTML = dayCount;
+      if (dayCount < 2) {
+        box.style.color = "#faad14";
+      } else {
+        box.style.color = "#1890ff";
+      }
+
+      if (dayCount < 1) {
+        if (document.querySelector("#iframePage").dataset.load == 0) {
+          document.querySelector("#iframePage").onload = () => {
+            document.querySelector("#page").style.opacity = 1;
+          };
+          setTimeout(() => {
+            document.querySelector("#page").style.opacity = 1;
+          }, 3000);
+          document
+            .querySelector("#iframePage")
+            .setAttribute("data-load", "1");
+          // document.querySelector("#iframePage").src = "./yanhua.html";
+        }
+        box.style.color = "#f5222d";
+        time.style.display = "none";
+        days.style.display = "none";
+        timehour.innerHTML = formatSeconds(countTime / 1000);
+      } else {
+        if (document.querySelector("#iframePage").dataset.load == 1) {
+          document.querySelector("#iframePage").onload = null;
+          document.querySelector("#page").style.opacity = 0;
+          document
+            .querySelector("#iframePage")
+            .setAttribute("data-load", "0");
+          // document.querySelector("#iframePage").removeAttribute("src");
+        }
+        time.style.display = "block";
+        days.style.display = "block";
+        timehour.innerHTML = formatSeconds(
+          Math.abs(todydate.getTime() - date.getTime()) / 1000
+        );
+      }
+      window.requestAnimationFrame(getTime);
     };
-    window.onresize = onload;
+    getTime();
+
+    holidaydatetime.addEventListener("input", (e) => {
+      console.log(e.target.value);
+      if (!e.target.value) return;
+      localStorage.setItem("holidaydatetime", e.target.value);
+      box.querySelector(".targetdate").innerHTML = e.target.value
+        .split("-")[2]
+        .split("T")[0];
+      targetHour = e.target.value.split("T")[1];
+      holidayTime = new Date(e.target.value);
+
+      const dateDay = e.target.value.split("-")[2].split("T")[0];
+      setWheather(
+        wheatherbox,
+        holidayWeather,
+        holidayCity,
+        0,
+        Number(dateDay)
+      );
+      setWheather(wheatherbox, homeWeather, homeCity, 1, Number(dateDay));
+    });
   </script>
+  <script>
+    let box2 = document.querySelector(".box2");
+    let days2 = box2.querySelector(".day");
+    let hour2 = box2.querySelector(".hour");
+    let time2 = box2.querySelector(".time");
+    let timehour2 = box2.querySelector(".timehour");
+    let gohomedatetime = document.querySelector("#gohomedatetime");
+    let homeAddress = document.querySelector("#homeAddress");
+    let targetHour2 = "09:00:00";
+    let holidayTime2 = new Date(
+      localStorage.getItem("gohomedatetime") || "2025-01-24 09:00:00"
+    );
+    if (localStorage.getItem("gohomedatetime")) {
+      targetHour2 = localStorage.getItem("gohomedatetime").split("T")[1];
+
+      box2.querySelector(".targetdate1").innerHTML = localStorage
+        .getItem("gohomedatetime")
+        .split("-")[2]
+        .split("T")[0];
+      box2.querySelector(".targetdate2").innerHTML = localStorage
+        .getItem("gohomedatetime")
+        .split("T")[1];
+      gohomedatetime.value = localStorage.getItem("gohomedatetime");
+    }
+    if (localStorage.getItem("homeAddress")) {
+      homeAddress.value = localStorage.getItem("homeAddress");
+      if (
+        localStorage.getItem("homeAddress").endsWith("市") ||
+        localStorage.getItem("homeAddress").endsWith("县") ||
+        localStorage.getItem("homeAddress").endsWith("区")
+      ) {
+        homeCity = localStorage
+          .getItem("homeAddress")
+          .substring(0, localStorage.getItem("homeAddress").length - 1);
+        console.log(homeCity);
+      } else {
+        homeCity = localStorage.getItem("homeAddress");
+      }
+    }
+    let todayday2 = new Date().getDate();
+    const goHomeTime = () => {
+      let date = new Date();
+      if (date.getDate() != todayday2) {
+        getWeather(Number(currentday));
+        todayday2 = date.getDate();
+      }
+      let todydate2 = new Date(
+        `2025-01-${new Date().getDate()} ${targetHour2}`
+      );
+      if (date.getTime() > todydate2.getTime()) {
+        todydate2 = new Date(
+          `2025-01-${new Date().getDate() + 1} ${targetHour2}`
+        );
+      }
+      let day = date.getDate();
+
+      const countTime2 = Math.abs(holidayTime2.getTime() - date.getTime());
+      let dayCount2 = Math.floor(countTime2 / (1000 * 60 * 60 * 24));
+      time2.innerHTML = dayCount2;
+      if (dayCount2 < 2) {
+        box2.style.color = "#faad14";
+      } else {
+        box2.style.color = "#1890ff";
+      }
+
+      if (dayCount2 < 1) {
+        box2.style.color = "#f5222d";
+        time2.style.display = "none";
+        days2.style.display = "none";
+        timehour2.innerHTML = formatSeconds(countTime2 / 1000);
+      } else {
+        time2.style.display = "block";
+        days2.style.display = "block";
+        timehour2.innerHTML = formatSeconds(
+          Math.abs(todydate2.getTime() - date.getTime()) / 1000
+        );
+      }
+      window.requestAnimationFrame(goHomeTime);
+    };
+    goHomeTime();
+    gohomedatetime.addEventListener("input", (e) => {
+      if (!e.target.value) return;
+      localStorage.setItem("gohomedatetime", e.target.value);
+      box2.querySelector(".targetdate1").innerHTML = e.target.value
+        .split("-")[2]
+        .split("T")[0];
+      targetHour2 = box2.querySelector(".targetdate2").innerHTML =
+        e.target.value.split("T")[1];
+      holidayTime2 = new Date(e.target.value);
+    });
+    homeAddress.addEventListener("input", (e) => {
+      if (!e.target.value) return;
+      localStorage.setItem("homeAddress", e.target.value);
+      if (
+        e.target.value.endsWith("市") ||
+        e.target.value.endsWith("县") ||
+        e.target.value.endsWith("区")
+      ) {
+        homeCity = e.target.value.substring(0, e.target.value.length - 1);
+        console.log(homeCity);
+      } else {
+        homeCity = e.target.value;
+      }
+    });
+  </script>
+  <script>
+    const baseUrl = `http://v1.yiketianqi.com/free/month?unescape=1&appid=${"86537513"}&appsecret=${"TFg1xPUV"}`;
+    function createURL(adcode) {
+      return baseUrl + `&city=${adcode}`;
+    }
+    let wheatherbox = document.querySelector(".weathers");
+    let holidayWeather;
+    let homeWeather;
+    let holidayCity;
+    let homeCity;
+    let currentday = 23;
+    if (localStorage.getItem("homeAddress")) {
+      if (
+        localStorage.getItem("homeAddress").endsWith("市") ||
+        localStorage.getItem("homeAddress").endsWith("县") ||
+        localStorage.getItem("homeAddress").endsWith("区")
+      ) {
+        homeCity = localStorage
+          .getItem("homeAddress")
+          .substring(0, localStorage.getItem("homeAddress").length - 1);
+        console.log(homeCity);
+      } else {
+        homeCity = localStorage.getItem("homeAddress");
+      }
+    }
+    homeAddress.addEventListener("change", (e) => {
+      if (!e.target.value) return;
+      fetch(createURL(homeCity))
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          homeWeather = res.data;
+          homeCity = res.city;
+          setWheather(wheatherbox, homeWeather, res.city, 1);
+        });
+    });
+    let getWeather = (currentday) => {
+      fetch(createURL(homeCity || "确山"))
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          homeWeather = res.data;
+          homeCity = res.city;
+          setWheather(wheatherbox, homeWeather, res.city, 1, currentday);
+        });
+      fetch(createURL(""))
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          holidayWeather = res.data;
+          holidayCity = res.city;
+          setWheather(wheatherbox, holidayWeather, res.city, 0, currentday);
+        });
+    };
+
+    if (localStorage.getItem("holidaydatetime")) {
+      currentday = localStorage
+        .getItem("holidaydatetime")
+        ?.split("-")[2]
+        .split("T")[0];
+    }
+    getWeather(Number(currentday));
+
+    const setWheather = (box, Weather, city, index = 0, tody = 23) => {
+      box.querySelectorAll(".weather-day").forEach((item, i) => {
+        item.innerHTML = Number(tody) + i + "号";
+      });
+      box.querySelectorAll(".item").forEach((item, i) => {
+        item.querySelectorAll(".weather")[index].innerHTML =
+          city +
+          "：" +
+          Weather.find((item) => item.date == `2025-01-${Number(tody) + i}`)
+            .wea +
+          "</br>" +
+          Weather.find((item) => item.date == `2025-01-${Number(tody) + i}`)
+            .tem_day +
+          "℃" +
+          " </br> " +
+          Weather.find((item) => item.date == `2025-01-${Number(tody) + i}`)
+            .win;
+      });
+    };
+  </script>
+</body>
+<script>
+  const onload = () => {
+    document
+      .querySelector("body")
+      .style.setProperty(
+        "--pageHeight",
+        document.querySelector(".weathers").getBoundingClientRect().height +
+        document.querySelector(".con").getBoundingClientRect().height +
+        "px"
+      );
+  };
+  window.onresize = onload;
+</script>
+
 </html>
