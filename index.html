@@ -168,7 +168,7 @@
       </div>
       <div class="createtime">
         <label> > </label>
-        自定义目的地（ 支持市区县, 不支持乡镇级别）：<input style="width: 80px" value="确山县" id="homeAddress" placeholder="例如：确山县或者确山" />
+        自定义目的地（ 仅支持市）：<input style="width: 80px" value="确山县" id="homeAddress" placeholder="例如：武汉" />
       </div>
     </div>
   </div>
@@ -386,7 +386,7 @@
     });
   </script>
   <script>
-    const baseUrl = `https://api.seniverse.com/v3/weather/daily.json?key=SqDCD6jCzE_nexWer`;
+    const baseUrl = `https://api.seniverse.com/v3/weather/daily.json?key=SqDCD6jCzE_nexWer&days=5`;
     function createURL(adcode) {
       return baseUrl + `&location=${adcode}`;
     }
@@ -416,26 +416,26 @@
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
-          homeWeather = res.data;
-          homeCity = res.city;
+          homeWeather = res.results[0]?.daily;
+          homeCity = res.results[0]?.location;
           setWheather(wheatherbox, homeWeather, res.city, 1);
         });
     });
     let getWeather = (currentday) => {
-      fetch(createURL(homeCity || "确山"))
+      fetch(createURL(homeCity))
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
-          homeWeather = res.data;
-          homeCity = res.city;
+          homeWeather = res.results[0]?.daily;
+          homeCity = res.results[0]?.location;
           setWheather(wheatherbox, homeWeather, res.city, 1, currentday);
         });
-      fetch(createURL(""))
+      fetch(createURL("ip"))
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
-          holidayWeather = res.data;
-          holidayCity = res.city;
+          holidayWeather = res.results[0]?.daily;
+          holidayCity = res.results[0]?.location;
           setWheather(wheatherbox, holidayWeather, res.city, 0, currentday);
         });
     };
@@ -448,7 +448,7 @@
     }
     getWeather(Number(currentday));
 
-    const setWheather = (box, Weather, city, index = 0, tody = 23) => {
+    const setWheather = (box, Weather, city, index = 0, tody = 0) => {
       if (!Weather) return
       box.querySelectorAll(".weather-day").forEach((item, i) => {
         item.innerHTML = Number(tody) + i + "号";
