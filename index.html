@@ -386,9 +386,9 @@
     });
   </script>
   <script>
-    const baseUrl = `http://v1.yiketianqi.com/free/month?unescape=1&appid=${"86537513"}&appsecret=${"TFg1xPUV"}`;
+    const baseUrl = `https://api.seniverse.com/v3/weather/daily.json?key=PMfrlDMImcoV2nbw_`;
     function createURL(adcode) {
-      return baseUrl + `&city=${adcode}`;
+      return baseUrl + `&location=${adcode}`;
     }
     let wheatherbox = document.querySelector(".weathers");
     let holidayWeather;
