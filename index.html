@@ -447,6 +447,7 @@
     getWeather(Number(currentday));
 
     const setWheather = (box, Weather, city, index = 0, tody = 23) => {
+      if (!Weather) return
       box.querySelectorAll(".weather-day").forEach((item, i) => {
         item.innerHTML = Number(tody) + i + "号";
       });
