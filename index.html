@@ -203,11 +203,11 @@
     const getTime = () => {
       let date = new Date();
       let todydate = new Date(
-        `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} ${targetHour}`
+        `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${targetHour}`
       );
       if (date.getTime() > todydate.getTime()) {
         todydate = new Date(
-          `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate() + 1} ${targetHour}`
+          `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate() + 1} ${targetHour}`
         );
       }
       let day = date.getDate();
@@ -326,11 +326,11 @@
         todayday2 = date.getDate();
       }
       let todydate2 = new Date(
-        `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} ${targetHour2}`
+        `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${targetHour2}`
       );
       if (date.getTime() > todydate2.getTime()) {
         todydate2 = new Date(
-          `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate() + 1} ${targetHour2}`
+          `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate() + 1} ${targetHour2}`
         );
       }
       let day = date.getDate();
@@ -417,8 +417,8 @@
         .then((res) => {
           console.log(res);
           homeWeather = res.results[0]?.daily;
-          homeCity = res.results[0]?.location;
-          setWheather(wheatherbox, homeWeather, res.city, 1);
+          homeCity = res.results[0]?.location?.name;
+          setWheather(wheatherbox, homeWeather, homeCity, 1);
         });
     });
     let getWeather = (currentday) => {
@@ -427,16 +427,16 @@
         .then((res) => {
           console.log(res);
           homeWeather = res.results[0]?.daily;
-          homeCity = res.results[0]?.location;
-          setWheather(wheatherbox, homeWeather, res.city, 1, currentday);
+          homeCity = res.results[0]?.location?.name;
+          setWheather(wheatherbox, homeWeather, homeCity, 1, currentday);
         });
       fetch(createURL("ip"))
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
           holidayWeather = res.results[0]?.daily;
-          holidayCity = res.results[0]?.location;
-          setWheather(wheatherbox, holidayWeather, res.city, 0, currentday);
+          holidayCity = res.results[0]?.location?.name;
+          setWheather(wheatherbox, holidayWeather, holidayCity, 0, currentday);
         });
     };
 
@@ -454,17 +454,25 @@
         item.innerHTML = Number(tody) + i + "号";
       });
       box.querySelectorAll(".item").forEach((item, i) => {
+        let dateDay = new Date().getDate() + i
+        let getMonth = new Date().getMonth() + 1
+        if (dateDay < 10) {
+          dateDay = '0' + dateDay
+        }
+        if (getMonth < 10) {
+          getMonth = '0' + getMonth
+        }
         item.querySelectorAll(".weather")[index].innerHTML =
           city +
           "：" +
-          Weather.find((item) => item.date == `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate() + i}`)
+          Weather.find((item) => item.date == `${new Date().getFullYear()}-${getMonth}-${dateDay}`)
             .text_day +
           "</br>" +
-          Weather.find((item) => item.date == `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate() + i}`)
+          Weather.find((item) => item.date == `${new Date().getFullYear()}-${getMonth}-${dateDay}`)
             .high +
           "℃" +
           " </br> " +
-          Weather.find((item) => item.date == `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate() + i}`)
+          Weather.find((item) => item.date == `${new Date().getFullYear()}-${getMonth}-${dateDay}`)
             .wind_scale;
       });
     };
