@@ -250,7 +250,7 @@
         time.style.display = "block";
         days.style.display = "block";
         timehour.innerHTML = formatSeconds(
-          Math.abs(todydate.getTime() - date.getTime()) / 1000
+          Math.abs(todydate.getTime() - date.getTime()) / 1000 - dayCount * 24 * 60 * 60
         );
       }
       window.requestAnimationFrame(getTime);
