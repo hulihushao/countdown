@@ -249,8 +249,9 @@
         }
         time.style.display = "block";
         days.style.display = "block";
+        const cha = Math.abs(todydate.getTime() - date.getTime()) / 1000 - dayCount * 24 * 60 * 60
         timehour.innerHTML = formatSeconds(
-          Math.abs(todydate.getTime() - date.getTime()) / 1000 - dayCount * 24 * 60 * 60
+          cha > 0 ? cha : Math.abs(todydate.getTime() - date.getTime()) / 1000
         );
       }
       window.requestAnimationFrame(getTime);
@@ -351,8 +352,9 @@
       } else {
         time2.style.display = "block";
         days2.style.display = "block";
+        const cha = Math.abs(todydate2.getTime() - date.getTime()) / 1000 - dayCount2 * 24 * 60 * 60
         timehour2.innerHTML = formatSeconds(
-          Math.abs(todydate2.getTime() - date.getTime()) / 1000
+          cha > 0 ? cha : Math.abs(todydate2.getTime() - date.getTime()) / 1000
         );
       }
       window.requestAnimationFrame(goHomeTime);
