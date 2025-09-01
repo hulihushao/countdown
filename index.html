@@ -386,7 +386,7 @@
     });
   </script>
   <script>
-    const baseUrl = `https://api.seniverse.com/v3/weather/daily.json?key=SqDCD6jCzE_nexWer&days=5`;
+    const baseUrl = `https://api.seniverse.com/v3/weather/daily.json?key=SqDCD6jCzE_nexWer&language=zh-Hans&unit=c&start=0&days=5`;
     function createURL(adcode) {
       return baseUrl + `&location=${adcode}`;
     }
@@ -450,12 +450,12 @@
 
     const setWheather = (box, Weather, city, index = 0, tody = 0) => {
       if (!Weather) return
+      let dateDay = new Date().getDate() + i
+      let getMonth = new Date().getMonth() + 1
       box.querySelectorAll(".weather-day").forEach((item, i) => {
-        item.innerHTML = Number(tody) + i + "号";
+        item.innerHTML = dateDay + i + "号";
       });
       box.querySelectorAll(".item").forEach((item, i) => {
-        let dateDay = new Date().getDate() + i
-        let getMonth = new Date().getMonth() + 1
         if (dateDay < 10) {
           dateDay = '0' + dateDay
         }
@@ -467,6 +467,9 @@
           "：" +
           Weather.find((item) => item.date == `${new Date().getFullYear()}-${getMonth}-${dateDay}`)
             .text_day +
+          ' ' +
+          Weather.find((item) => item.date == `${new Date().getFullYear()}-${getMonth}-${dateDay}`)
+            .precip +
           "</br>" +
           Weather.find((item) => item.date == `${new Date().getFullYear()}-${getMonth}-${dateDay}`)
             .high +
