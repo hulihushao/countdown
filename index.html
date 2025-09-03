@@ -24,15 +24,25 @@
       html {
         height: 100%;
       }
+      body {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url("https://dss1.bdstatic.com/lvoZeXSm1A5BphGlnYG/skin/60.jpg?2");
+      }
+      body label {
+        mix-blend-mode: difference;
+      }
 
       .con {
         display: flex;
         flex-wrap: wrap;
+        align-items: flex-end;
       }
 
       .box,
       .box2 {
-        width: 50%;
+        width: 40%;
         height: 70%;
         margin: auto;
         display: flex;
@@ -42,6 +52,23 @@
         line-height: 100px;
         color: #1890ff;
         font-family: LED;
+      }
+
+      .custom-bg-box {
+        width: 20%;
+        color: #1890ff;
+        display: flex;
+        white-space: nowrap;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .custom-bg-box input {
+        width: calc(100% - 30px);
+        height: 28px;
+        border: none;
+        border-bottom: 1px solid #1890ff;
+        outline: none;
+        padding: 5px 8px;
       }
 
       .time,
@@ -96,9 +123,23 @@
     </style>
     <style>
       @media screen and (max-width: 900px) {
+        body {
+          overflow: hidden;
+        }
+
+        .con {
+          overflow: auto;
+          height: 81%;
+        }
+
         .box,
-        .box2 {
+        .box2,
+        .custom-bg-box {
           width: 100%;
+        }
+        .custom-bg-box {
+          margin-top: 10px;
+          padding: 0 10px;
         }
 
         .item {
@@ -115,19 +156,37 @@
   <body style="--pageHeight: 0px" onload="onload()">
     <div class="weathers">
       <div class="item1 item">
-        <span class="weather-day1 weather-day">23号</span>
-        <span class="weather"></span>
-        <span class="weather"></span>
+        <label for="">
+          <span class="weather-day1 weather-day">23号</span>
+        </label>
+        <label for="">
+          <span class="weather"></span>
+        </label>
+        <label for="">
+          <span class="weather"></span>
+        </label>
       </div>
       <div class="item2 item">
-        <span class="weather-day2 weather-day">24号</span>
-        <span class="weather"></span>
-        <span class="weather"></span>
+        <label for="">
+          <span class="weather-day2 weather-day">24号</span>
+        </label>
+        <label for="">
+          <span class="weather"></span>
+        </label>
+        <label for="">
+          <span class="weather"></span>
+        </label>
       </div>
       <div class="item3 item">
-        <span class="weather-day3 weather-day">25号</span>
-        <span class="weather"></span>
-        <span class="weather"></span>
+        <label for="">
+          <span class="weather-day3 weather-day">25号</span>
+        </label>
+        <label for="">
+          <span class="weather"></span>
+        </label>
+        <label for="">
+          <span class="weather"></span>
+        </label>
       </div>
       <!-- <div class="item4 item">
       <span class="weather-day4 weather-day">26号</span>
@@ -143,15 +202,26 @@
     <div class="con">
       <div class="box">
         <h2 class="h2">
-          距离 <span class="targetdate">23</span> 号下班放假还有
+          <label for="">
+            距离 <span class="targetdate">23</span> 号下班放假还有
+          </label>
         </h2>
-        <h1 class="time">00</h1>
-        <h2 class="day">天</h2>
-        <h1 class="timehour">00</h1>
-        <h2 class="hour">小时</h2>
+        <label for="">
+          <h1 class="time">00</h1>
+        </label>
+        <label for="">
+          <h2 class="day">天</h2>
+        </label>
+        <label for="">
+          <h1 class="timehour">00</h1>
+        </label>
+        <label for="">
+          <h2 class="hour">小时</h2>
+        </label>
         <div class="createtime">
           <label> > </label>
-          自定义放假时间：<input
+          <label for="">自定义放假时间：</label>
+          <input
             type="datetime-local"
             name=""
             value="2025-01-23T18:00"
@@ -159,18 +229,43 @@
           />
         </div>
       </div>
+      <div class="custom-bg-box">
+        <span>
+          <label for="">主题色：</label>
+          <input type="color" id="theme-color" value="#1890ff"/>
+        </span>
+        <span>
+          <label for="">背景图地址：</label>
+          <input type="text" id="bg-url" value="" autofocus />
+        </span>
+        <span>
+          <label for="">或者</label>
+          <input type="file" id="bg-file" />
+        </span>
+      </div>
       <div class="box2">
         <h2 class="h2">
-          距离 <span class="targetdate1">25</span> 号
-          <span class="targetdate2">09:00</span> 回家还有
+          <label for="">
+            距离 <span class="targetdate1">25</span> 号
+            <span class="targetdate2">09:00</span> 回家还有
+          </label>
         </h2>
-        <h1 class="time">00</h1>
-        <h2 class="day">天</h2>
-        <h1 class="timehour">00</h1>
-        <h2 class="hour">小时</h2>
+        <label for="">
+          <h1 class="time">00</h1>
+        </label>
+        <label for="">
+          <h2 class="day">天</h2>
+        </label>
+        <label for="">
+          <h1 class="timehour">00</h1>
+        </label>
+        <label for="">
+          <h2 class="hour">小时</h2>
+        </label>
         <div class="createtime">
           <label> > </label>
-          自定义回家时间：<input
+          <label for="">自定义回家时间：</label>
+          <input
             type="datetime-local"
             name=""
             value="2025-01-25T09:00"
@@ -179,7 +274,8 @@
         </div>
         <div class="createtime">
           <label> > </label>
-          自定义目的地（ 仅支持市）：<input
+          <label for="">自定义目的地（ 仅支持市）：</label>
+          <input
             style="width: 80px"
             value="确山县"
             id="homeAddress"
@@ -544,5 +640,37 @@
         );
     };
     window.onresize = onload;
+
+    function imageToBase64(image, callback) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        callback(event.target.result);
+      };
+      reader.readAsDataURL(image);
+    }
+
+    function changeBg(e, type) {
+      if (!e.target.value) return;
+      if (type == "upload") {
+        console.log(e.target.files[0]);
+        imageToBase64(e.target.files[0], (base64) => {
+          document.body.style.backgroundImage = `url('${base64}')`;
+        });
+      } else {
+        document.body.style.backgroundImage = `url('${e.target.value}')`;
+      }
+    }
+    const themeColor = document.querySelector("#theme-color");
+    themeColor.addEventListener("input", (e) => {
+      document.querySelectorAll("label").forEach((item) => {
+        item.style.color = e.target.value;
+      });
+    });
+    const bg = document.querySelector("#bg-url");
+    bg.addEventListener("change", changeBg);
+    const bgfile = document.querySelector("#bg-file");
+    bgfile.addEventListener("change", (e) => {
+      changeBg(e, "upload");
+    });
   </script>
 </html>
