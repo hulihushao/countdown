@@ -232,7 +232,7 @@
       <div class="custom-bg-box">
         <span>
           <label for="">主题色：</label>
-          <input type="color" id="theme-color" value="#1890ff"/>
+          <input type="color" id="theme-color" value="#1890ff" />
         </span>
         <span>
           <label for="">背景图地址：</label>
@@ -641,6 +641,12 @@
     };
     window.onresize = onload;
 
+    if (localStorage.getItem("bg-url")) {
+      document.body.style.backgroundImage = `url('${localStorage.getItem(
+        "bg-url"
+      )}')`;
+    }
+
     function imageToBase64(image, callback) {
       const reader = new FileReader();
       reader.onload = function (event) {
@@ -652,11 +658,12 @@
     function changeBg(e, type) {
       if (!e.target.value) return;
       if (type == "upload") {
-        console.log(e.target.files[0]);
         imageToBase64(e.target.files[0], (base64) => {
+          localStorage.setItem("bg-url", base64);
           document.body.style.backgroundImage = `url('${base64}')`;
         });
       } else {
+        localStorage.setItem("bg-url", e.target.value);
         document.body.style.backgroundImage = `url('${e.target.value}')`;
       }
     }
