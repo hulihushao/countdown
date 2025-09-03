@@ -647,6 +647,8 @@
       )}')`;
     }
     if (localStorage.getItem("theme-color")) {
+      document.querySelector("#theme-color").value =
+        localStorage.getItem("theme-color");
       document.querySelectorAll("label").forEach((item) => {
         item.style.color = localStorage.getItem("theme-color");
       });
