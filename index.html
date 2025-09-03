@@ -646,6 +646,11 @@
         "bg-url"
       )}')`;
     }
+    if (localStorage.getItem("theme-color")) {
+      document.querySelectorAll("label").forEach((item) => {
+        item.style.color = localStorage.getItem("theme-color");
+      });
+    }
 
     function imageToBase64(image, callback) {
       const reader = new FileReader();
@@ -669,6 +674,7 @@
     }
     const themeColor = document.querySelector("#theme-color");
     themeColor.addEventListener("input", (e) => {
+      localStorage.setItem("theme-color", e.target.value);
       document.querySelectorAll("label").forEach((item) => {
         item.style.color = e.target.value;
       });
