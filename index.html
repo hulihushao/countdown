@@ -59,12 +59,16 @@
         width: 25%;
         color: #1890ff;
         display: flex;
-        white-space: nowrap;
         align-items: center;
         flex-wrap: wrap;
       }
-      .custom-bg-box input {
+      .custom-bg-box span{
+        display: inline-block;
         width: calc(100% - 30px);
+        white-space: nowrap;
+      }
+      .custom-bg-box input[type="text"] {
+        width: calc(100% - 100px);
         height: 28px;
         border: none;
         border-bottom: 1px solid #1890ff;
