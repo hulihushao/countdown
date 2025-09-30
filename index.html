@@ -595,34 +595,25 @@
         if (!Weather) return;
         let dateDay = new Date().getDate();
         box.querySelectorAll(".weather-day").forEach((item, i) => {
-          item.innerHTML = dateDay + i + "号";
+          item.innerHTML = Weather[i].date.split("-")[2] + "号";
         });
         box.querySelectorAll(".item").forEach((item, i) => {
-          dateDay = new Date().getDate() + i;
-          let getMonth = new Date().getMonth() + 1;
-          if (dateDay < 10) {
-            dateDay = "0" + dateDay;
-          }
-          if (getMonth < 10) {
-            getMonth = "0" + getMonth;
-          }
-          const rq = `${new Date().getFullYear()}-${getMonth}-${dateDay}`;
           item.querySelectorAll(".weather")[index].innerHTML =
             city +
             "：" +
-            Weather.find((item) => item.date == rq)?.text_day +
+            Weather[i]?.text_day +
             " " +
-            Weather.find((item) => item.date == rq)?.precip * 100 +
+            Weather[i]?.precip * 100 +
             "%" +
             "</br>" +
-            Weather.find((item) => item.date == rq)?.low +
+            Weather[i]?.low +
             " - " +
-            Weather.find((item) => item.date == rq)?.high +
+            Weather[i]?.high +
             "℃" +
             " </br> 风向：" +
-            Weather.find((item) => item.date == rq)?.wind_direction +
+            Weather[i]?.wind_direction +
             " " +
-            Weather.find((item) => item.date == rq)?.wind_scale +
+            Weather[i]?.wind_scale +
             "级";
         });
       };
