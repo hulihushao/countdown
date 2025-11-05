@@ -45,7 +45,7 @@
       .box2 {
         width: 35%;
         height: 100%;
-        margin:0 auto;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -62,7 +62,7 @@
         align-items: center;
         flex-wrap: wrap;
       }
-      .custom-bg-box span{
+      .custom-bg-box span {
         display: inline-block;
         width: calc(100% - 30px);
         white-space: nowrap;
@@ -282,7 +282,7 @@
           <label for="">自定义目的地（ 仅支持市）：</label>
           <input
             style="width: 80px"
-            value="确山县"
+            value="驻马店"
             id="homeAddress"
             placeholder="例如：武汉"
           />
@@ -305,6 +305,12 @@
       ></iframe>
     </div>
     <script>
+      if (!localStorage.getItem("holidaydatetime")) {
+        localStorage.setItem("holidaydatetime", "2026-02-11T16:30:00");
+      }
+      if (!localStorage.getItem("gohomedatetime")) {
+        localStorage.setItem("gohomedatetime", "2026-02-12T09:00:00");
+      }
       let box = document.querySelector(".box");
       let days = box.querySelector(".day");
       let hour = box.querySelector(".hour");
@@ -312,9 +318,7 @@
       let timehour = box.querySelector(".timehour");
       let holidaydatetime = document.querySelector("#holidaydatetime");
       let targetHour = "18:00:00";
-      let holidayTime = new Date(
-        localStorage.getItem("holidaydatetime") || "2025-01-23 18:00:00"
-      );
+      let holidayTime = new Date(localStorage.getItem("holidaydatetime"));
       if (localStorage.getItem("holidaydatetime")) {
         targetHour = localStorage.getItem("holidaydatetime").split("T")[1];
         box.querySelector(".targetdate").innerHTML = localStorage
@@ -551,6 +555,8 @@
         } else {
           homeCity = localStorage.getItem("homeAddress");
         }
+      } else {
+        homeCity = homeAddress.value;
       }
       homeAddress.addEventListener("change", (e) => {
         if (!e.target.value) return;
